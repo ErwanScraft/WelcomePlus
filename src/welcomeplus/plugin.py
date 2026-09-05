@@ -1,11 +1,27 @@
 import yaml
 
 from endstone.event import PlayerJoinEvent, event_handler
+from endstone.command import Command, CommandSender
 from endstone.plugin import Plugin
 
 
 class WelcomePlusPlugin(Plugin):
     api_version = "0.11"
+    commands = {
+        "welcomeplus": {
+            "description": "Manage WelcomePlus.",
+            "usages": ["/welcomeplus reload"],
+            "aliases": ["wp"],
+            "permissions": ["welcomeplus.command.reload"],
+        }
+    }
+    
+    permissions = {
+        "welcomeplus.command.reload": {
+            "description": "Allows reloading the WelcomePlus configuration.",
+            "default": "op",
+        }
+    }
 
     def on_enable(self) -> None:
         self.save_resources("config.yml")
@@ -15,9 +31,14 @@ class WelcomePlusPlugin(Plugin):
 
     def _load_config(self) -> None:
         config_path = self.data_folder / "config.yml"
-
+    
         with config_path.open("r", encoding="utf-8") as file:
-            self._config = yaml.safe_load(file) or {}
+            config = yaml.safe_load(file) or {}
+    
+        if not isinstance(config, dict):
+            raise ValueError("config.yml must contain a YAML mapping.")
+    
+        self._config = config
 
     @event_handler
     def on_player_join(self, event: PlayerJoinEvent) -> None:
@@ -28,3 +49,30 @@ class WelcomePlusPlugin(Plugin):
             self._config.get("stay", 70),
             self._config.get("fade_out", 20),
         )
+    
+    def on_command(
+        self,
+        sender: CommandSender,
+        command: Command,
+        args: list[str],
+    ) -> bool:
+        if command.name != "welcomeplus":
+            return False
+    
+        if args == ["reload"]:
+            try:
+                self._load_config()
+            except Exception as error:
+                sender.send_message(
+                    f"§cFailed to reload WelcomePlus configuration: {error}"
+                )
+                self.logger.error(
+                    f"Failed to reload config.yml: {error}"
+                )
+                return False
+    
+            sender.send_message("§aWelcomePlus configuration reloaded.")
+            return True
+    
+        sender.send_message("§eUsage: /welcomeplus reload")
+        return True
