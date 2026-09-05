@@ -2,25 +2,7 @@ from endstone.command import Command, CommandSender
 
 
 class WelcomePlusCommand:
-    commands = {
-        "welcomeplus": {
-            "description": "Manage WelcomePlus.",
-            "usages": [
-                "/welcomeplus help",
-                "/welcomeplus reload",
-            ],
-            "aliases": ["wp"],
-            "permissions": ["welcomeplus.command"],
-        }
-    }
-
-    permissions = {
-        "welcomeplus.command": {
-            "description": "Allows using WelcomePlus commands.",
-            "default": "op",
-        }
-    }
-
+    
     def __init__(self, plugin) -> None:
         self.plugin = plugin
 

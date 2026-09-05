@@ -8,6 +8,24 @@ from endstone.plugin import Plugin
 
 class WelcomePlusPlugin(Plugin):
     api_version = "0.11"
+    commands = {
+        "welcomeplus": {
+            "description": "Manage WelcomePlus.",
+            "usages": [
+                "/welcomeplus help",
+                "/welcomeplus reload",
+            ],
+            "aliases": ["wp"],
+            "permissions": ["welcomeplus.command"],
+        }
+    }
+    
+    permissions = {
+        "welcomeplus.command": {
+            "description": "Allows using WelcomePlus commands.",
+            "default": "op",
+        }
+    }
 
     def on_enable(self) -> None:
         self.save_resources("config.yml")
