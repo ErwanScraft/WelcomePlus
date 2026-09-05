@@ -1,31 +1,18 @@
 import yaml
 
 from endstone.event import PlayerJoinEvent, event_handler
+from .commands.welcomeplus import WelcomePlusCommand
 from endstone.command import Command, CommandSender
 from endstone.plugin import Plugin
 
 
 class WelcomePlusPlugin(Plugin):
     api_version = "0.11"
-    commands = {
-        "welcomeplus": {
-            "description": "Manage WelcomePlus.",
-            "usages": ["/welcomeplus reload"],
-            "aliases": ["wp"],
-            "permissions": ["welcomeplus.command.reload"],
-        }
-    }
-    
-    permissions = {
-        "welcomeplus.command.reload": {
-            "description": "Allows reloading the WelcomePlus configuration.",
-            "default": "op",
-        }
-    }
 
     def on_enable(self) -> None:
         self.save_resources("config.yml")
         self._load_config()
+        self._command = WelcomePlusCommand(self)
         self.register_events(self)
         self.logger.info("Welcome Plus enabled!")
 
@@ -56,23 +43,4 @@ class WelcomePlusPlugin(Plugin):
         command: Command,
         args: list[str],
     ) -> bool:
-        if command.name != "welcomeplus":
-            return False
-    
-        if args == ["reload"]:
-            try:
-                self._load_config()
-            except Exception as error:
-                sender.send_message(
-                    f"§cFailed to reload WelcomePlus configuration: {error}"
-                )
-                self.logger.error(
-                    f"Failed to reload config.yml: {error}"
-                )
-                return False
-    
-            sender.send_message("§aWelcomePlus configuration reloaded.")
-            return True
-    
-        sender.send_message("§eUsage: /welcomeplus reload")
-        return True
+        return self._command.on_command(sender, command, args)
