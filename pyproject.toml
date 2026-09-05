@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "endstone-welcomeplus"
-version = "0.1.2"
+version = "0.1.3"
 description = "Welcome title plugin for Endstone servers"
 authors = [
     { name = "ErwanScraft" }
