@@ -1,25 +1,17 @@
 # ============================================================
 # WelcomePlus Configuration
 # ============================================================
-# Main configuration file for the WelcomePlus plugin.
-#
-# Configuration is organized by feature to keep this file
-# clean, maintainable, and easy to expand.
-#
-# Each feature should have its own section.
-# ============================================================
-
 
 # ============================================================
 # Welcome Title
 # ============================================================
-# Displays a title when a player joins the server.
 welcome:
-
-  # Main title displayed to the player.
-  title: "§6Welcome!"
+  # Main title displayed when a player joins.
+  # Supports: {player}
+  title: "§6Welcome, {player}!"
 
   # Subtitle displayed below the main title.
+  # Supports: {player}
   subtitle: "§fEnjoy your time on our server!"
 
   # Time in ticks before the title starts appearing.
@@ -33,15 +25,35 @@ welcome:
 
 
 # ============================================================
+# Join Message
+# ============================================================
+# Message broadcast when a player joins the server.
+join_message:
+  # Enable or disable the join message.
+  enabled: true
+
+  # Supports: {player}
+  message: "§a+ §f{player} joined the server."
+
+
+# ============================================================
+# Leave Message
+# ============================================================
+# Message broadcast when a player leaves the server.
+leave_message:
+  # Enable or disable the leave message.
+  enabled: true
+
+  # Supports: {player}
+  message: "§c- §f{player} left the server."
+
+
+# ============================================================
 # Future Features
 # ============================================================
 # New features should be added as separate sections.
 #
 # Example:
-#
-# join_message:
-#   enabled: true
-#   message: "§a{player} joined the server!"
 #
 # first_join:
 #   enabled: true
