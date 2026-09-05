@@ -36,6 +36,16 @@ welcome:
   # Title fade-out duration in ticks.
   fade_out: 20
 
+# ============================================================
+# First Join
+# ============================================================
+first_join:
+  # Enable or disable the first-join feature.
+  enabled: true
+
+  # Message broadcast when a player joins the server for the first time.
+  # Supports: {player}
+  message: "§e+ §fWelcome {player} to the server for the first time!"
 
 # ============================================================
 # Join Message
