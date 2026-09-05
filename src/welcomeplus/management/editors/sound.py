@@ -10,24 +10,24 @@ class SoundEditor:
 
     def open(self, player) -> None:
         feature = self.config.get_feature("sound")
-
-        form = ModalForm(title="§dJoin Sound")
-
+    
+        form = ModalForm(title="Join Sound")
+    
         form.add_control(
             Toggle(
-                "Enable join sound",
+                "Enabled",
                 default_value=feature["enabled"],
             )
         )
-
+    
         form.add_control(
             TextInput(
                 "Sound",
-                "Example: random.levelup",
+                "random.levelup",
                 default_value=feature["name"],
             )
         )
-
+    
         form.add_control(
             Slider(
                 "Volume",
@@ -37,7 +37,7 @@ class SoundEditor:
                 default_value=feature["volume"],
             )
         )
-
+    
         form.add_control(
             Slider(
                 "Pitch",
@@ -47,10 +47,10 @@ class SoundEditor:
                 default_value=feature["pitch"],
             )
         )
-
+    
         form.on_submit = self._save
         form.on_close = self.manager.open
-
+    
         player.send_form(form)
 
     def _save(self, player, result) -> None:

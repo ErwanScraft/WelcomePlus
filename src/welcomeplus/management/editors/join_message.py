@@ -10,27 +10,27 @@ class JoinMessageEditor:
 
     def open(self, player) -> None:
         feature = self.config.get_feature("join_message")
-
-        form = ModalForm(title="§bJoin Message")
-
+    
+        form = ModalForm(title="Join Message")
+    
         form.add_control(
             Toggle(
-                "Enable join message",
+                "Enabled",
                 default_value=feature["enabled"],
             )
         )
-
+    
         form.add_control(
             TextInput(
                 "Message",
-                "Example: §a+ §f{player} joined the server.",
+                "{player} joined the server.",
                 default_value=feature["message"],
             )
         )
-
+    
         form.on_submit = self._save
         form.on_close = self.manager.open
-
+    
         player.send_form(form)
 
     def _save(self, player, result) -> None:

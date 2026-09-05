@@ -10,32 +10,32 @@ class WelcomeEditor:
 
     def open(self, player) -> None:
         feature = self.config.get_feature("welcome")
-
-        form = ModalForm(title="§6Welcome Title")
-
+    
+        form = ModalForm(title="Welcome")
+    
         form.add_control(
             Toggle(
-                "Enable welcome title",
+                "Enabled",
                 default_value=feature["enabled"],
             )
         )
-
+    
         form.add_control(
             TextInput(
                 "Title",
-                "Example: §6Welcome, {player}!",
+                "Welcome, {player}!",
                 default_value=feature["title"],
             )
         )
-
+    
         form.add_control(
             TextInput(
                 "Subtitle",
-                "Example: §fEnjoy your time!",
+                "Enjoy your time!",
                 default_value=feature["subtitle"],
             )
         )
-
+    
         form.add_control(
             Slider(
                 "Fade In",
@@ -45,17 +45,17 @@ class WelcomeEditor:
                 default_value=feature["fade_in"],
             )
         )
-
+    
         form.add_control(
             Slider(
-                "Stay",
+                "Duration",
                 0,
                 200,
                 1,
                 default_value=feature["stay"],
             )
         )
-
+    
         form.add_control(
             Slider(
                 "Fade Out",
@@ -65,10 +65,10 @@ class WelcomeEditor:
                 default_value=feature["fade_out"],
             )
         )
-
+    
         form.on_submit = self._save
         form.on_close = self.manager.open
-
+    
         player.send_form(form)
 
     def _save(self, player, result) -> None:

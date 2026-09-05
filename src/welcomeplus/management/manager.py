@@ -20,36 +20,33 @@ class WelcomePlusManager:
 
     def open(self, player) -> None:
         form = ActionForm(
-            title="§6§lWelcomePlus Manager",
-            content=(
-                "§7Manage your WelcomePlus configuration.\n\n"
-                "§fSelect a feature to edit."
-            ),
+            title="WelcomePlus",
+            content="Select a feature to configure.",
         )
-
+    
         form.add_button(
-            "§eWelcome Title",
+            "Welcome",
             on_click=self.welcome_editor.open,
         )
-
+    
         form.add_button(
-            "§aFirst Join",
+            "First Join",
             on_click=self.first_join_editor.open,
         )
-
+    
         form.add_button(
-            "§bJoin Message",
+            "Join Message",
             on_click=self.join_message_editor.open,
         )
-
+    
         form.add_button(
-            "§cLeave Message",
+            "Leave Message",
             on_click=self.leave_message_editor.open,
         )
-
+    
         form.add_button(
-            "§dJoin Sound",
+            "Join Sound",
             on_click=self.sound_editor.open,
         )
-
+    
         player.send_form(form)
