@@ -3,15 +3,18 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "endstone-welcome-plus"
-version = "0.0.6"
+name = "endstone-welcomeplus"
+version = "0.0.7"
 description = "Welcome title plugin for Endstone servers"
 authors = [
     { name = "ErwanScraft" }
 ]
+dependencies = [
+    "PyYAML>=6.0"
+]
 
 [project.entry-points."endstone"]
-welcome-plus = "welcomeplus:WelcomePlusPlugin"
+welcomeplus = "welcomeplus:WelcomePlusPlugin"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/welcomeplus"]
