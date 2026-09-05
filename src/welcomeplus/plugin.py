@@ -5,6 +5,7 @@ from .commands.welcomeplus import WelcomePlusCommand
 from .config import WelcomePlusConfig
 from .events import PlayerEvents
 from .management import WelcomePlusManager
+from .webhook import WelcomePlusWebhook
 from .player_data import PlayerData
 
 
@@ -40,23 +41,29 @@ class WelcomePlusPlugin(Plugin):
 
     def on_enable(self) -> None:
         self.save_resources("config.yml")
-
+    
         self._config_manager = WelcomePlusConfig(self)
         self._config_manager.load()
-
+    
         self._player_data = PlayerData(self)
         self._player_data.load()
-
+    
+        self._webhook = WelcomePlusWebhook(
+            self,
+            self._config_manager,
+        )
+    
         self._manager = WelcomePlusManager(self)
         self._command = WelcomePlusCommand(self)
-
+    
         self.register_events(
             PlayerEvents(
                 self._config_manager,
                 self._player_data,
+                self._webhook,
             )
         )
-
+    
         self.logger.info("WelcomePlus enabled!")
 
     def on_command(

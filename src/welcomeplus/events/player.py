@@ -2,9 +2,15 @@ from endstone.event import PlayerJoinEvent, PlayerQuitEvent, event_handler
 
 
 class PlayerEvents:
-    def __init__(self, config, player_data) -> None:
+    def __init__(
+        self,
+        config,
+        player_data,
+        webhook,
+    ) -> None:
         self.config = config
         self.player_data = player_data
+        self.webhook = webhook
 
     @staticmethod
     def _replace_placeholders(
@@ -22,6 +28,8 @@ class PlayerEvents:
         self._handle_first_join(player, player_name)
         self._handle_join_sound(player)
         self._handle_join_message(player, player_name)
+
+        self.webhook.send_player_join(player)
 
     @event_handler
     def on_player_quit(self, event: PlayerQuitEvent) -> None:

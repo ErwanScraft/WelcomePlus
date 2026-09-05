@@ -87,6 +87,27 @@ sound:
   # Sound pitch.
   pitch: 1.0
 
+# ============================================================
+# Webhook
+# ============================================================
+webhook:
+  # Enable or disable webhook notifications.
+  enabled: false
+
+  # Webhook endpoint that will receive POST requests.
+  url: ""
+
+  # Optional secret used as a Bearer token.
+  # The secret is sent through the Authorization header.
+  secret: ""
+
+  # HTTP request timeout in seconds.
+  timeout: 5
+
+  # Events that can be sent to the webhook.
+  events:
+    # Send a webhook when a player joins the server.
+    player_join: true
 
 # ============================================================
 # References
