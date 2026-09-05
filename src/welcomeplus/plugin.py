@@ -64,14 +64,15 @@ class WelcomePlusPlugin(Plugin):
         player_name = player.name
     
         welcome = self._get_feature_config("welcome")
-    
-        player.send_title(
-            self._replace_placeholders(welcome["title"], player_name),
-            self._replace_placeholders(welcome["subtitle"], player_name),
-            welcome["fade_in"],
-            welcome["stay"],
-            welcome["fade_out"],
-        )
+
+        if welcome["enabled"]:
+            player.send_title(
+                self._replace_placeholders(welcome["title"], player_name),
+                self._replace_placeholders(welcome["subtitle"], player_name),
+                welcome["fade_in"],
+                welcome["stay"],
+                welcome["fade_out"],
+            )
         
         sound = self._get_feature_config("sound")
 

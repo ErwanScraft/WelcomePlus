@@ -1,37 +1,50 @@
-# ============================================================
+# __        __   _                            ____  _
+# \ \      / /__| | ___ ___  _ __ ___   ___  |  _ \| |_   _ ___
+#  \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \ | |_) | | | | / __|
+#   \ V  V /  __/ | (_| (_) | | | | | |  __/ |  __/| | |_| \__ \
+#    \_/\_/ \___|_|\___\___/|_| |_| |_|\___| |_|   |_|\__,_|___/
+#
 # WelcomePlus Configuration
+# A configurable welcome, join, leave, and sound plugin for Endstone.
+#
+# Documentation:
+# https://github.com/ErwanScraft/WelcomePlus
 # ============================================================
+
 
 # ============================================================
 # Welcome Title
 # ============================================================
 welcome:
-  # Main title displayed when a player joins.
+  # Enable or disable the welcome title.
+  enabled: true
+
+  # Title displayed when a player joins.
   # Supports: {player}
   title: "§6Welcome, {player}!"
 
-  # Subtitle displayed below the main title.
+  # Subtitle displayed below the title.
   # Supports: {player}
   subtitle: "§fEnjoy your time on our server!"
 
-  # Time in ticks before the title starts appearing.
+  # Title fade-in duration in ticks.
   fade_in: 10
 
-  # Time in ticks that the title remains visible.
+  # Title display duration in ticks.
   stay: 70
 
-  # Time in ticks before the title disappears.
+  # Title fade-out duration in ticks.
   fade_out: 20
 
 
 # ============================================================
 # Join Message
 # ============================================================
-# Message broadcast when a player joins the server.
 join_message:
   # Enable or disable the join message.
   enabled: true
 
+  # Message broadcast when a player joins.
   # Supports: {player}
   message: "§a+ §f{player} joined the server."
 
@@ -39,23 +52,23 @@ join_message:
 # ============================================================
 # Leave Message
 # ============================================================
-# Message broadcast when a player leaves the server.
 leave_message:
   # Enable or disable the leave message.
   enabled: true
 
+  # Message broadcast when a player leaves.
   # Supports: {player}
   message: "§c- §f{player} left the server."
+
 
 # ============================================================
 # Join Sound
 # ============================================================
-# Sound played for the player when they join the server.
 sound:
   # Enable or disable the join sound.
   enabled: true
 
-  # Internal Minecraft sound name.
+  # Minecraft Bedrock sound event name.
   name: "random.levelup"
 
   # Sound volume.
@@ -63,3 +76,16 @@ sound:
 
   # Sound pitch.
   pitch: 1.0
+
+
+# ============================================================
+# References
+# ============================================================
+#
+# Endstone color and formatting codes:
+# https://endstone.dev/v0.11/tutorials/use-color-codes/
+#
+# Minecraft Bedrock sound events:
+# https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontosound
+#
+# ============================================================
