@@ -8,6 +8,7 @@ from endstone.plugin import Plugin
 
 class WelcomePlusPlugin(Plugin):
     api_version = "0.11"
+    authors = ["ErwanScraft"]
     commands = {
         "welcomeplus": {
             "description": "Manage WelcomePlus.",
@@ -47,12 +48,14 @@ class WelcomePlusPlugin(Plugin):
 
     @event_handler
     def on_player_join(self, event: PlayerJoinEvent) -> None:
+        welcome = self._config.get("welcome", {})
+
         event.player.send_title(
-            self._config.get("title", "§6Selamat Datang!"),
-            self._config.get("subtitle", "§fNikmati permainan di server kami"),
-            self._config.get("fade_in", 10),
-            self._config.get("stay", 70),
-            self._config.get("fade_out", 20),
+            welcome.get("title", "§6Welcome!"),
+            welcome.get("subtitle", "§fEnjoy your time on our server!"),
+            welcome.get("fade_in", 10),
+            welcome.get("stay", 70),
+            welcome.get("fade_out", 20),
         )
     
     def on_command(

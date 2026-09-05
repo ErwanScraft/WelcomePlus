@@ -1,7 +1,55 @@
+# ============================================================
 # WelcomePlus Configuration
+# ============================================================
+# Main configuration file for the WelcomePlus plugin.
+#
+# Configuration is organized by feature to keep this file
+# clean, maintainable, and easy to expand.
+#
+# Each feature should have its own section.
+# ============================================================
 
-title: "§6Selamat Datang!"
-subtitle: "§fNikmati permainan di server kami"
-fade_in: 10
-stay: 70
-fade_out: 20
+
+# ============================================================
+# Welcome Title
+# ============================================================
+# Displays a title when a player joins the server.
+welcome:
+
+  # Main title displayed to the player.
+  title: "§6Welcome!"
+
+  # Subtitle displayed below the main title.
+  subtitle: "§fEnjoy your time on our server!"
+
+  # Time in ticks before the title starts appearing.
+  fade_in: 10
+
+  # Time in ticks that the title remains visible.
+  stay: 70
+
+  # Time in ticks before the title disappears.
+  fade_out: 20
+
+
+# ============================================================
+# Future Features
+# ============================================================
+# New features should be added as separate sections.
+#
+# Example:
+#
+# join_message:
+#   enabled: true
+#   message: "§a{player} joined the server!"
+#
+# first_join:
+#   enabled: true
+#
+# sound:
+#   enabled: true
+#   name: "..."
+#
+# Do not add configuration options for features that have
+# not been implemented yet.
+# ============================================================
