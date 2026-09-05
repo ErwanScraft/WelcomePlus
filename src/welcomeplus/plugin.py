@@ -72,6 +72,16 @@ class WelcomePlusPlugin(Plugin):
             welcome["stay"],
             welcome["fade_out"],
         )
+        
+        sound = self._get_feature_config("sound")
+
+        if sound["enabled"]:
+            player.play_sound(
+                player.location,
+                sound["name"],
+                sound["volume"],
+                sound["pitch"],
+            )
     
         join_message = self._get_feature_config("join_message")
     

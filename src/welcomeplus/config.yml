@@ -47,21 +47,19 @@ leave_message:
   # Supports: {player}
   message: "§c- §f{player} left the server."
 
+# ============================================================
+# Join Sound
+# ============================================================
+# Sound played for the player when they join the server.
+sound:
+  # Enable or disable the join sound.
+  enabled: true
 
-# ============================================================
-# Future Features
-# ============================================================
-# New features should be added as separate sections.
-#
-# Example:
-#
-# first_join:
-#   enabled: true
-#
-# sound:
-#   enabled: true
-#   name: "..."
-#
-# Do not add configuration options for features that have
-# not been implemented yet.
-# ============================================================
+  # Internal Minecraft sound name.
+  name: "random.levelup"
+
+  # Sound volume.
+  volume: 1.0
+
+  # Sound pitch.
+  pitch: 1.0
