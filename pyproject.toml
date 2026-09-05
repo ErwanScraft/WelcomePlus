@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "welcomeplus"
+version = "0.0.5"
+description = "Welcome title plugin for Endstone servers"
+authors = [
+    { name = "ErwanScraft" }
+]
+
+[project.entry-points."endstone"]
+welcomeplus = "welcomeplus:WelcomePlusPlugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/welcomeplus"]
