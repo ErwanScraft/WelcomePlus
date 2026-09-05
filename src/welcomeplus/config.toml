@@ -1,0 +1,8 @@
+# WelcomePlus Configuration
+
+title = "§6Selamat Datang!"
+subtitle = "§fNikmati permainan di server kami"
+
+fade_in = 10
+stay = 70
+fade_out = 20
