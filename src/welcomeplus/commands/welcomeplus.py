@@ -23,7 +23,7 @@ class WelcomePlusCommand:
 
         if args == ["reload"]:
             try:
-                self.plugin._load_config()
+                self.plugin._config_manager.load()
             except Exception as error:
                 sender.send_message(
                     f"§cFailed to reload WelcomePlus configuration: {error}"
