@@ -88,34 +88,6 @@ sound:
   pitch: 1.0
 
 # ============================================================
-# Webhook
-# ============================================================
-webhook:
-  # Enable or disable webhook notifications.
-  enabled: false
-
-  # Webhook endpoint that will receive POST requests.
-  url: ""
-
-  # Optional secret used as a Bearer token.
-  # The secret is sent through the Authorization header.
-  secret: ""
-
-  # HTTP request timeout in seconds.
-  timeout: 5
-
-  # Events that can be sent to the webhook.
-  events:
-    # Send an event when a player joins the server.
-    player.join: true
-
-    # Send an event when a player joins the server for the first time.
-    player.first_join: true
-
-    # Send an event when a player leaves the server.
-    player.leave: true
-
-# ============================================================
 # References
 # ============================================================
 #

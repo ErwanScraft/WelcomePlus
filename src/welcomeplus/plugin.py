@@ -5,7 +5,6 @@ from .commands.welcomeplus import WelcomePlusCommand
 from .config import WelcomePlusConfig
 from .events import PlayerEvents
 from .management import WelcomePlusManager
-from .webhook import WelcomePlusWebhook
 from .player_data import PlayerData
 
 
@@ -48,11 +47,6 @@ class WelcomePlusPlugin(Plugin):
         self._player_data = PlayerData(self)
         self._player_data.load()
     
-        self._webhook = WelcomePlusWebhook(
-            self,
-            self._config_manager,
-        )
-    
         self._manager = WelcomePlusManager(self)
         self._command = WelcomePlusCommand(self)
     
@@ -60,7 +54,6 @@ class WelcomePlusPlugin(Plugin):
             PlayerEvents(
                 self._config_manager,
                 self._player_data,
-                self._webhook,
             )
         )
     

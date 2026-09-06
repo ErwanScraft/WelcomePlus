@@ -6,11 +6,9 @@ class PlayerEvents:
         self,
         config,
         player_data,
-        webhook,
     ) -> None:
         self.config = config
         self.player_data = player_data
-        self.webhook = webhook
 
     @staticmethod
     def _replace_placeholders(
@@ -18,13 +16,6 @@ class PlayerEvents:
         player_name: str,
     ) -> str:
         return text.replace("{player}", player_name)
-
-    @staticmethod
-    def _player_data(player) -> dict:
-        return {
-            "name": player.name,
-            "uuid": str(player.unique_id),
-        }
 
     @event_handler
     def on_player_join(self, event: PlayerJoinEvent) -> None:
@@ -37,23 +28,9 @@ class PlayerEvents:
         self._handle_join_sound(player)
         self._handle_join_message(player, player_name)
 
-        player_data = self._player_data(player)
-
-        self.webhook.dispatch(
-            "player.join",
-            {"player": player_data},
-        )
-
-        if first_join:
-            self.webhook.dispatch(
-                "player.first_join",
-                {"player": player_data},
-            )
-
     @event_handler
     def on_player_quit(self, event: PlayerQuitEvent) -> None:
         player = event.player
-        player_data = self._player_data(player)
         leave_message = self.config.get_feature("leave_message")
 
         if leave_message["enabled"]:
@@ -63,11 +40,6 @@ class PlayerEvents:
                     player.name,
                 )
             )
-
-        self.webhook.dispatch(
-            "player.leave",
-            {"player": player_data},
-        )
 
     def _handle_welcome(self, player, player_name: str) -> None:
         welcome = self.config.get_feature("welcome")
