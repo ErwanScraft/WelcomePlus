@@ -106,8 +106,14 @@ webhook:
 
   # Events that can be sent to the webhook.
   events:
-      # Send an event when a player joins the server.
-      player.join: true
+    # Send an event when a player joins the server.
+    player.join: true
+
+    # Send an event when a player joins the server for the first time.
+    player.first_join: true
+
+    # Send an event when a player leaves the server.
+    player.leave: true
 
 # ============================================================
 # References

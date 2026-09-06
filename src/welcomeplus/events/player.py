@@ -19,39 +19,54 @@ class PlayerEvents:
     ) -> str:
         return text.replace("{player}", player_name)
 
+    @staticmethod
+    def _player_data(player) -> dict:
+        return {
+            "name": player.name,
+            "uuid": str(player.unique_id),
+        }
+
     @event_handler
     def on_player_join(self, event: PlayerJoinEvent) -> None:
         player = event.player
         player_name = player.name
+        first_join = self.player_data.is_first_join(player)
 
         self._handle_welcome(player, player_name)
-        self._handle_first_join(player, player_name)
+        self._handle_first_join(player, player_name, first_join)
         self._handle_join_sound(player)
         self._handle_join_message(player, player_name)
-        
+
+        player_data = self._player_data(player)
+
         self.webhook.dispatch(
             "player.join",
-            {
-                "player": {
-                    "name": player.name,
-                    "uuid": str(player.unique_id),
-                },
-            },
+            {"player": player_data},
         )
+
+        if first_join:
+            self.webhook.dispatch(
+                "player.first_join",
+                {"player": player_data},
+            )
 
     @event_handler
     def on_player_quit(self, event: PlayerQuitEvent) -> None:
         player = event.player
+        player_data = self._player_data(player)
         leave_message = self.config.get_feature("leave_message")
 
-        if not leave_message["enabled"]:
-            return
-
-        player.server.broadcast_message(
-            self._replace_placeholders(
-                leave_message["message"],
-                player.name,
+        if leave_message["enabled"]:
+            player.server.broadcast_message(
+                self._replace_placeholders(
+                    leave_message["message"],
+                    player.name,
+                )
             )
+
+        self.webhook.dispatch(
+            "player.leave",
+            {"player": player_data},
         )
 
     def _handle_welcome(self, player, player_name: str) -> None:
@@ -74,18 +89,20 @@ class PlayerEvents:
             welcome["fade_out"],
         )
 
-    def _handle_first_join(self, player, player_name: str) -> None:
-        first_join = self.config.get_feature("first_join")
+    def _handle_first_join(
+        self,
+        player,
+        player_name: str,
+        first_join: bool,
+    ) -> None:
+        feature = self.config.get_feature("first_join")
 
-        if not first_join["enabled"]:
-            return
-
-        if not self.player_data.is_first_join(player):
+        if not feature["enabled"] or not first_join:
             return
 
         player.server.broadcast_message(
             self._replace_placeholders(
-                first_join["message"],
+                feature["message"],
                 player_name,
             )
         )
