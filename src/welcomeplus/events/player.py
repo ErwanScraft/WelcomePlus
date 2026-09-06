@@ -28,8 +28,16 @@ class PlayerEvents:
         self._handle_first_join(player, player_name)
         self._handle_join_sound(player)
         self._handle_join_message(player, player_name)
-
-        self.webhook.send_player_join(player)
+        
+        self.webhook.dispatch(
+            "player.join",
+            {
+                "player": {
+                    "name": player.name,
+                    "uuid": str(player.unique_id),
+                },
+            },
+        )
 
     @event_handler
     def on_player_quit(self, event: PlayerQuitEvent) -> None:

@@ -1,5 +1,6 @@
 import json
 import threading
+from datetime import datetime, timezone
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -9,7 +10,7 @@ class WelcomePlusWebhook:
         self.plugin = plugin
         self.config = config
 
-    def send_player_join(self, player) -> None:
+    def dispatch(self, event: str, data: dict) -> None:
         webhook = self.config.get_feature("webhook")
 
         if not webhook.get("enabled", False):
@@ -17,7 +18,7 @@ class WelcomePlusWebhook:
 
         events = webhook.get("events", {})
 
-        if not events.get("player_join", False):
+        if not events.get(event, False):
             return
 
         url = str(webhook.get("url", "")).strip()
@@ -28,7 +29,12 @@ class WelcomePlusWebhook:
             )
             return
 
-        payload = self._build_player_join_payload(player)
+        payload = {
+            "version": 1,
+            "event": event,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            **data,
+        }
 
         threading.Thread(
             target=self._send,
@@ -36,15 +42,6 @@ class WelcomePlusWebhook:
             daemon=True,
             name="WelcomePlus-Webhook",
         ).start()
-
-    def _build_player_join_payload(self, player) -> dict:
-        return {
-            "event": "player_join",
-            "player": {
-                "name": player.name,
-                "uuid": str(player.unique_id),
-            },
-        }
 
     def _send(
         self,
