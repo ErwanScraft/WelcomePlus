@@ -34,6 +34,7 @@ class PlayerEvents:
         leave_message = self.config.get_feature("leave_message")
 
         if leave_message["enabled"]:
+            event.quit_message = None
             player.server.broadcast_message(
                 self._replace_placeholders(
                     leave_message["message"],
@@ -94,6 +95,9 @@ class PlayerEvents:
 
     def _handle_join_message(self, player, player_name: str) -> None:
         join_message = self.config.get_feature("join_message")
+
+        if join_message["enabled"]:
+            event.join_message = None
 
         if not join_message["enabled"]:
             return
