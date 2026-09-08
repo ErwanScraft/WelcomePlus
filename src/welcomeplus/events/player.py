@@ -25,25 +25,30 @@ class PlayerEvents:
         player_name = player.name
         first_join = self.player_data.is_first_join(player)
 
+        event.join_message = None
+
         self._handle_welcome(player, player_name)
         self._handle_motd(player, player_name)
         self._handle_first_join(player, player_name, first_join)
-        self._handle_join_sound(player)
         self._handle_join_message(player, player_name)
 
     @event_handler
     def on_player_quit(self, event: PlayerQuitEvent) -> None:
         player = event.player
+        player_name = player.name
         leave_message = self.config.get_feature("leave_message")
 
-        if leave_message["enabled"]:
-            event.quit_message = None
-            player.server.broadcast_message(
-                self._replace_placeholders(
-                    leave_message["message"],
-                    player.name,
-                )
+        event.quit_message = None
+
+        if not leave_message["enabled"]:
+            return
+
+        player.server.broadcast_message(
+            self._replace_placeholders(
+                leave_message["message"],
+                player_name,
             )
+        )
 
     def _handle_welcome(self, player, player_name: str) -> None:
         welcome = self.config.get_feature("welcome")
@@ -99,9 +104,6 @@ class PlayerEvents:
     def _handle_join_message(self, player, player_name: str) -> None:
         join_message = self.config.get_feature("join_message")
 
-        if join_message["enabled"]:
-            event.join_message = None
-
         if not join_message["enabled"]:
             return
 
@@ -111,13 +113,13 @@ class PlayerEvents:
                 player_name,
             )
         )
-    
+
     def _handle_motd(self, player, player_name: str) -> None:
         motd = self.motd_config.get()
-    
+
         if not motd:
             return
-    
+
         player.send_message(
             self._replace_placeholders(
                 motd,

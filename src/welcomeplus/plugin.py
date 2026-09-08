@@ -40,10 +40,8 @@ class WelcomePlusPlugin(Plugin):
     }
 
     def on_enable(self) -> None:
-        self.save_resources(
-            "config.yml",
-            "motd.yml",
-        )
+        self.save_resources("config.yml")
+        self.save_resources("motd.yml")
         
         self._config_manager = WelcomePlusConfig(self)
         self._config_manager.load()
