@@ -3,6 +3,7 @@ from endstone.plugin import Plugin
 
 from .commands.welcomeplus import WelcomePlusCommand
 from .config import WelcomePlusConfig
+from .motd import MotdConfig
 from .events import PlayerEvents
 from .management import WelcomePlusManager
 from .player_data import PlayerData
@@ -39,10 +40,16 @@ class WelcomePlusPlugin(Plugin):
     }
 
     def on_enable(self) -> None:
-        self.save_resources("config.yml")
-    
+        self.save_resources(
+            "config.yml",
+            "motd.yml",
+        )
+        
         self._config_manager = WelcomePlusConfig(self)
         self._config_manager.load()
+        
+        self._motd_config = MotdConfig(self)
+        self._motd_config.load()
     
         self._player_data = PlayerData(self)
         self._player_data.load()
@@ -54,6 +61,7 @@ class WelcomePlusPlugin(Plugin):
             PlayerEvents(
                 self._config_manager,
                 self._player_data,
+                self._motd_config,
             )
         )
     

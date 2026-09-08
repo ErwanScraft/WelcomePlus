@@ -59,6 +59,8 @@ class WelcomePlusCommand:
     def _reload(self, sender: CommandSender) -> bool:
         try:
             self.plugin._config_manager.load()
+            self.plugin._motd_config.load()
+            
         except Exception as error:
             sender.send_message(
                 f"§cFailed to reload WelcomePlus configuration: {error}"

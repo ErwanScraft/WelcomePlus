@@ -6,9 +6,11 @@ class PlayerEvents:
         self,
         config,
         player_data,
+        motd_config,
     ) -> None:
         self.config = config
         self.player_data = player_data
+        self.motd_config = motd_config
 
     @staticmethod
     def _replace_placeholders(
@@ -24,6 +26,7 @@ class PlayerEvents:
         first_join = self.player_data.is_first_join(player)
 
         self._handle_welcome(player, player_name)
+        self._handle_motd(player, player_name)
         self._handle_first_join(player, player_name, first_join)
         self._handle_join_sound(player)
         self._handle_join_message(player, player_name)
@@ -105,6 +108,19 @@ class PlayerEvents:
         player.server.broadcast_message(
             self._replace_placeholders(
                 join_message["message"],
+                player_name,
+            )
+        )
+    
+    def _handle_motd(self, player, player_name: str) -> None:
+        motd = self.motd_config.get()
+    
+        if not motd:
+            return
+    
+        player.send_message(
+            self._replace_placeholders(
+                motd,
                 player_name,
             )
         )

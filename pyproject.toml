@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "endstone-welcomeplus"
-version = "0.1.5"
+version = "0.1.6"
 description = "Welcome title plugin for Endstone servers"
 authors = [
     { name = "ErwanScraft" }
@@ -21,3 +21,4 @@ packages = ["src/welcomeplus"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "resources/config.yml" = "welcomeplus/config.yml"
+"resources/motd.yml" = "welcomeplus/motd.yml"
